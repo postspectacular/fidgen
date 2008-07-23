@@ -29,40 +29,36 @@ void initUI() {
 
   ui.addButton("acceptMarker",0,right-100,bottom-20,100,20).setLabel("accept");
   ui.addButton("discardMarker",0,right-100,bottom-50,100,20).setLabel("discard");
-  ui.addButton("discardMarker",0,right-100,bottom-50,100,20).setLabel("save tree file");
+  ui.addButton("saveTrees",0,right-100,bottom-90,100,20).setLabel("save tree file");
+  ui.addButton("newSession",0,right-100,bottom-120,100,20).setLabel("new session");
   ui.setColorLabel(0xffcccccc);
   ui.setColorValue(0xff000000);
 }
 
 void onChangeNodeCount(int num) {
   NUM_NODES=num;
-  store.clear();
-  newFid=isSaved=true;
+  newSession();
 }
 
 void onChangeClusterCount(int num) {
   MAX_NODES_IN_CLUSTER=num;
-  store.clear();
-  newFid=isSaved=true;
+  newSession();
 }
 
 void onChangeMinBlackCount(int num) {
   MIN_BLACK_NODES=num;
-  store.clear();
-  newFid=isSaved=true;
+  newSession();
 }
 
 void onChangeMaxBlackCount(int num) {
   MAX_BLACK_NODES=num;
-  store.clear();
-  newFid=isSaved=true;
+  newSession();
 }
 
 void onChangeClusterDistance(float num) {
   CLUSTER_DIST_FACTOR=num;
   CLUSTER_DIST = NODE_DIAMETER * CLUSTER_DIST_FACTOR;
-  store.clear();
-  newFid=isSaved=true;
+  newSession();
 }
 
 void onChangeMinOrientDistance(float num) {

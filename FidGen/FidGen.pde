@@ -33,6 +33,8 @@ FiducialStore store;
 PImage logoBlack,logoWhite;
 PFont txtFont,fidFont;
 
+boolean combinationsExhausted=false;
+
 void setup() {
   size(1024,1024,OPENGL);
   hint( ENABLE_OPENGL_4X_SMOOTH );
@@ -45,6 +47,7 @@ void draw() {
   if (newFid && isSaved) {
     String id=null;
     boolean isUnique=true;
+    int numIterations=0;
     do {
       physics=new VerletPhysics();
       fid=new FiducialNode(null,NUM_NODES, new Vec3D(), new Vec3D());
@@ -53,7 +56,8 @@ void draw() {
       if (!isUnique) println("duplicate, retry...");
       if (id.length()>MAX_DEPTHSEQ_LENGTH) println("sequence too long, retry...");
     }
-    while(!isUnique);
+    while(!isUnique && numIterations++<100);
+    combinationsExhausted=(numIterations>=MAX_ITERATIONS);
     if (forceMinimumDistance) {
       for(int i=0; i<300; i++) physics.update();
       fid.update();
@@ -76,7 +80,12 @@ void draw() {
       store.push(fid);
     }
   }
-  background(isInverted ? 0: 255);
+  if (combinationsExhausted) {
+    background(255,0,0);
+  } 
+  else {
+    background(isInverted ? 0: 255);
+  }
   ellipseMode(CENTER);
   noStroke();
   pushMatrix();
@@ -111,9 +120,11 @@ void draw() {
     popMatrix();
   }
   if (newFid && !isSaved) {
-    String fn=SAVE_NAME+"/fid-"+nf(store.totalSize()-1,4)+".png";
-    saveFrame(fn);
-    println(fn+" saved");
+    if (!combinationsExhausted) {
+      String fn=SAVE_NAME+"/fid-"+nf(store.totalSize()-1,4)+".png";
+      saveFrame(fn);
+      println(fn+" saved");
+    }
     isSaved=true;
   }
   translate(centroid.x,centroid.y);  
@@ -176,4 +187,11 @@ void discardMarker() {
 
 String newSessionID() {
   return "fiducials-"+year()+nf(month(),2)+nf(day(),2)+"_"+nf(hour(),2)+nf(minute(),2)+nf(second(),2);
+}
+
+void newSession() {
+  store.clear();
+  newFid=isSaved=true;
+  combinationsExhausted=false;
+  SAVE_NAME = newSessionID();
 }

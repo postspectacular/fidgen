@@ -17,6 +17,8 @@ float CLUSTER_DIST = NODE_DIAMETER * CLUSTER_DIST_FACTOR;
 float CLUSTER_STRENGTH = 0.05;
 float MIN_ORIENT_LEN = 0.75;
 
+int MAX_ITERATIONS = 200;
+
 boolean newFid=true;
 boolean isSaved=true;
 boolean isInverted=true;
