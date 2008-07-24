@@ -3,8 +3,8 @@ ControlP5 ui;
 void initUI() {
   logoBlack=loadImage("fidgen_b.png");
   logoWhite=loadImage("fidgen_w.png");
-  txtFont=loadFont("Georgia-14.vlw");
-  fidFont=loadFont("Typ1451Bold-24.vlw");
+  txtFont=loadFont(config.getProperty("ui.font.info","Georgia-14.vlw"));
+  fidFont=loadFont(config.getProperty("ui.font.fiducial","Typ1451Bold-24.vlw"));
   int gap=20;
   int right=width-gap;
   int bottom=height-gap;
@@ -22,7 +22,7 @@ void initUI() {
   ui.addSlider("onChangeClusterCount",3,11,MAX_NODES_IN_CLUSTER,gap+200,gap+40,100,20).setLabel("nodes in cluster");
   ui.addSlider("onChangeMinBlackCount",2,7,MIN_BLACK_NODES,gap+400,gap,100,20).setLabel("min black nodes");
   ui.addSlider("onChangeMaxBlackCount",2,7,MAX_BLACK_NODES,gap+400,gap+40,100,20).setLabel("max black nodes");
-  ui.addSlider("onChangeClusterDistance",2,8,CLUSTER_DIST_FACTOR,gap+600,gap,100,20).setLabel("cluster distance");
+  ui.addSlider("onChangeClusterDistance",4.85,8,CLUSTER_DIST_FACTOR,gap+600,gap,100,20).setLabel("cluster distance");
   
   ui.addSlider("onChangeMinOrientDistance",0.7,0.9,MIN_ORIENT_LEN,gap+600,gap+40,100,20).setLabel("min arrow length");
   ui.addToggle("forceMinimumDistance",forceMinimumDistance,gap+800,gap+40,20,20).setLabel("force arrow length");

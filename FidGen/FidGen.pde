@@ -23,20 +23,13 @@ import processing.opengl.*;
 
 import toxi.geom.*;
 import toxi.physics.*;
+import toxi.util.datatypes.*;
 
 import controlP5.*;
 
-VerletPhysics physics;
-FiducialNode fid;
-FiducialStore store;
-
-PImage logoBlack,logoWhite;
-PFont txtFont,fidFont;
-
-boolean combinationsExhausted=false;
-
 void setup() {
-  size(1024,1024,OPENGL);
+  initConfig();
+  size(config.getInt("screen.width",1024),config.getInt("screen.height",1024),OPENGL);
   hint( ENABLE_OPENGL_4X_SMOOTH );
   physics=new VerletPhysics();
   store=new FiducialStore();
@@ -44,6 +37,7 @@ void setup() {
 }
 
 void draw() {
+  requestFocus();
   if (newFid && isSaved) {
     String id=null;
     boolean isUnique=true;
@@ -53,10 +47,10 @@ void draw() {
       fid=new FiducialNode(null,NUM_NODES, new Vec3D(), new Vec3D());
       id=fid.toString();
       isUnique=store.isNewUnique(id);
-      if (!isUnique) println("duplicate, retry...");
+      if (!isUnique) println("duplicate, retry... "+numIterations);
       if (id.length()>MAX_DEPTHSEQ_LENGTH) println("sequence too long, retry...");
     }
-    while(!isUnique && numIterations++<100);
+    while(!isUnique && numIterations++<MAX_ITERATIONS);
     combinationsExhausted=(numIterations>=MAX_ITERATIONS);
     if (forceMinimumDistance) {
       for(int i=0; i<300; i++) physics.update();
@@ -98,30 +92,30 @@ void draw() {
   scale(DRAW_SCALE);
   fid.draw();
   popMatrix();
+  pushMatrix();
+  translate(20,height-20);
+  rotate(-HALF_PI);
+  image(isInverted ? logoWhite : logoBlack,0,0);
   if (showDepthSequence) {
-    pushMatrix();
-    translate(20,height-20);
-    rotate(-HALF_PI);
-    image(isInverted ? logoWhite : logoBlack,0,0);
     fill(isInverted ? 255 : 0);
     textFont(txtFont);
     textAlign(LEFT);
     text("current tree: "+fid.toString(),180,18);
     text("unique trees generated: "+store.sessionSize()+" ("+store.totalSize()+")",180,34);
-    popMatrix();
   }
+  popMatrix();
   if (showFiducialID) {
     pushMatrix();
     translate(width/2,height-40);
     textAlign(CENTER);
     textFont(fidFont);
     fill(isInverted ? 255 : 0);
-    text(nf(store.sessionSize()-1,4),0,0);
+    text(nf(store.sessionSize()-1,NUM_DIGITS),0,0);
     popMatrix();
   }
   if (newFid && !isSaved) {
     if (!combinationsExhausted) {
-      String fn=SAVE_NAME+"/fid-"+nf(store.totalSize()-1,4)+".png";
+      String fn=SAVE_NAME+"/fid-"+nf(store.totalSize()-1,NUM_DIGITS)+".png";
       saveFrame(fn);
       println(fn+" saved");
     }
@@ -138,7 +132,7 @@ void draw() {
 }
 
 void drawPhysics() {
-  stroke(0x60ff4400);
+  stroke(0xa0ff0088);
   beginShape(LINES);
   Iterator is=physics.springs.iterator();
   while(is.hasNext()) {
@@ -149,6 +143,7 @@ void drawPhysics() {
 }
 
 void showOrientation() {
+  noStroke();
   fill(0,255,0);
   ellipse(fid.avgBlack.x,fid.avgBlack.y,10,10);
   fill(0,255,255);
@@ -183,6 +178,11 @@ void discardMarker() {
   if(store.pop()) println("removed current fiducial");
   else println("not found");
   newFid=isSaved=true;
+}
+
+void saveTrees() {
+  store.save();
+  newFid=true;
 }
 
 String newSessionID() {

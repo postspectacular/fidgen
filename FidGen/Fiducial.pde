@@ -29,7 +29,6 @@ class FiducialNode extends VerletParticle {
         // root
         this.lock();
         numBlack=(int)random(MIN_BLACK_NODES,MAX_BLACK_NODES);
-        //println("blacks: "+numBlack);
         VerletParticle blackCentre=new VerletParticle(0,-SCALE*0.33,0);
         AABB blackBounds=new AABB(blackCentre,new Vec3D(SCALE*0.5,SCALE*0.13,0));
         physics.addParticle(blackCentre);
@@ -54,7 +53,7 @@ class FiducialNode extends VerletParticle {
         while(nodesLeft>0) {
           int nodes=(int)random(1,PApplet.constrain(nodesLeft,1,MAX_NODES_IN_CLUSTER));
           //println("white: "+nodes);
-          FiducialNode f=new FiducialNode(this,nodes,new Vec3D(), new Vec3D(random(-1,1)*SCALE/4, random(0.5,1)*SCALE/2, 0));
+          FiducialNode f=new FiducialNode(this,nodes,new Vec3D(), new Vec3D(random(-1,1)*SCALE*0.25, random(0.5,1)*SCALE*0.5, 0));
           f.bounds=BOUNDS;
           clusters.add(f);
           children.add(f);
@@ -78,7 +77,6 @@ class FiducialNode extends VerletParticle {
           f.bounds=BOUNDS;
           children.add(f);
           root.nodes.add(f);
-          //physics.addSpring(new VerletSpring(this,f,0,0.001));
           if (i>0) {
             for(int j=0; j<i; j++) {
               physics.addSpring(new VerletSpring((VerletParticle)children.get(j),f,minDist,0.01));
@@ -165,7 +163,8 @@ class FiducialNode extends VerletParticle {
 
   void draw() {
     int[] sizes=new int[]{
-      MAX_CIRCLE_RADIUS,MAX_CIRCLE_RADIUS-3,4,1                                        };
+      MAX_CIRCLE_RADIUS,MAX_CIRCLE_RADIUS-3,4,1
+    };
     boolean isBlack=true;
     for(int i=0; i<sizes.length; i++) {
       Iterator c=children.iterator();
@@ -208,7 +207,6 @@ class FiducialNode extends VerletParticle {
         d=(int)(NODE_DIAMETER*LEAF_SCALE);
         if (level==1) {
           isBlack=true;
-          //d=(int)(NODE_DIAMETER*1.66);
         }
       }
       if (!isInverted) {

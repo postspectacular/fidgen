@@ -9,8 +9,7 @@ void keyPressed() {
     showDebug=!showDebug;
   } 
   else if (key=='s') {
-    store.save();
-    newFid=true;
+    saveTrees();
   }
   else if (key=='a') {
     newFid=true;
