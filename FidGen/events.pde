@@ -1,4 +1,5 @@
 void keyPressed() {
+  key|=0x20; // ignore upper/lower case
   if (key=='x') {
     discardMarker();
   } 
@@ -19,6 +20,12 @@ void keyPressed() {
   }
   else if (key=='h') {
     showDepthSequence=!showDepthSequence;
+  }
+  else if (key=='n') {
+     newSession();
+  } 
+  else if (key=='l') {
+    showFiducialID=!showFiducialID;
   }
   checkSaveKey();
 }

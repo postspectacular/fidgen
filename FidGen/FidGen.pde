@@ -2,7 +2,21 @@
  * FidGen - a general purpose fiducial marker generator
  * for reacTIVision based projects
  * 
- * Copyright (c) 2008 Karsten Schmidt
+ * A PostSpectacular production:
+ * http://postspectacular.com
+ * 
+ * Please see the online user guide at the project wiki:
+ * http://code.google.com/p/fidgen/wiki/Usage
+ * 
+ * Remember that all markers generated with this software are licensed
+ * under the Creative Commons Attribution-Non-commercial license:
+ * http://creativecommons.org/licenses/by-nc/2.0/uk/
+ *
+ * By using this software you agreed to be bound by the conditions set out
+ * in the license. If you require the tool for commercial purposes you'll
+ * need to obtain a separate license from the author.
+ *
+ * Copyright (c) 2008 Karsten Schmidt < info at postspectacular dot com >
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
