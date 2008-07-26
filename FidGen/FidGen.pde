@@ -32,7 +32,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import processing.video.*;
 import processing.opengl.*;
 
 import toxi.geom.*;
@@ -52,7 +51,7 @@ void setup() {
 }
 
 void draw() {
-  requestFocus();
+  if (!this.hasFocus()) requestFocus();
   if (newFid && isSaved) {
     String id=null;
     boolean isUnique=true;
