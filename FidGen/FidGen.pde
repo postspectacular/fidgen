@@ -48,6 +48,7 @@ void setup() {
   physics=new VerletPhysics();
   store=new FiducialStore();
   initUI();
+  newSession();
 }
 
 void draw() {
@@ -142,7 +143,6 @@ void draw() {
     showOrientation();
   }
   popMatrix();
-  checkSave();
 }
 
 void drawPhysics() {

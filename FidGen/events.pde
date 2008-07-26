@@ -27,5 +27,4 @@ void keyPressed() {
   else if (key=='l') {
     showFiducialID=!showFiducialID;
   }
-  checkSaveKey();
 }

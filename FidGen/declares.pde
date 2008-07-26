@@ -8,3 +8,6 @@ PImage logoBlack,logoWhite;
 PFont txtFont,fidFont;
 
 boolean combinationsExhausted=false;
+boolean doSave=false;
+
+String SAVE_NAME;
