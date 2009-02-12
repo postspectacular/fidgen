@@ -118,11 +118,11 @@ class FiducialNode extends VerletParticle {
             Iterator k=s.children.iterator();
             while(k.hasNext()) {
               FiducialNode c=(FiducialNode)k.next();
-              physics.addSpring(new ExpandSpring(f,c,CLUSTER_DIST,CLUSTER_STRENGTH));
+              physics.addSpring(new VerletMinDistanceSpring(f,c,CLUSTER_DIST,CLUSTER_STRENGTH));
             }
           } 
           else {
-            physics.addSpring(new ExpandSpring(f,s,CLUSTER_DIST,CLUSTER_STRENGTH));
+            physics.addSpring(new VerletMinDistanceSpring(f,s,CLUSTER_DIST,CLUSTER_STRENGTH));
           }
         }
       }
@@ -135,11 +135,11 @@ class FiducialNode extends VerletParticle {
           Iterator k=s.children.iterator();
           while(k.hasNext()) {
             FiducialNode c=(FiducialNode)k.next();
-            physics.addSpring(new ExpandSpring(this,c,CLUSTER_DIST,CLUSTER_STRENGTH));
+            physics.addSpring(new VerletMinDistanceSpring(this,c,CLUSTER_DIST,CLUSTER_STRENGTH));
           }
         } 
         else {
-          physics.addSpring(new ExpandSpring(this,s,CLUSTER_DIST,CLUSTER_STRENGTH));
+          physics.addSpring(new VerletMinDistanceSpring(this,s,CLUSTER_DIST,CLUSTER_STRENGTH));
         }
       }
     }
@@ -245,16 +245,5 @@ class FiducialNode extends VerletParticle {
       max.maxSelf(this.add(d,d,0));
     }
     return new AABB(min.interpolateTo(max,0.5), max.sub(min).scaleSelf(0.5));
-  }
-}
-
-class ExpandSpring extends VerletSpring {
-  ExpandSpring(VerletParticle a, VerletParticle b, float len, float str) {
-    super(a,b,len,str);
-  }
-  
-  void update() {
-    if (b.sub(a).magnitude()<restLength)
-    super.update();
   }
 }
