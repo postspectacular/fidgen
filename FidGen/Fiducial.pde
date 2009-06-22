@@ -246,4 +246,8 @@ class FiducialNode extends VerletParticle {
     }
     return new AABB(min.interpolateTo(max,0.5), max.sub(min).scaleSelf(0.5));
   }
+  
+  public boolean equals(Object o) {
+    return toString().equals(o.toString());
+  }
 }
