@@ -1,4 +1,4 @@
-FidGen - a general purpose fiducial marker generator
+FidGen v0003 - a general purpose fiducial marker generator
 for reacTIVision based projects
 
 A PostSpectacular production
@@ -6,10 +6,6 @@ http://postspectacular.com/
 
 Please see the online user guide at the project wiki:
 http://code.google.com/p/fidgen/wiki/Usage
-
-Remember that all markers generated with this software are licensed
-under the Creative Commons Attribution-Non-commercial license:
-http://creativecommons.org/licenses/by-nc/2.0/uk/
 
 By using this software you agreed to be bound by the conditions set out
 in the license. If you require the tool for commercial purposes you'll
